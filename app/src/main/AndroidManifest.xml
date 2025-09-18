@@ -13,6 +13,9 @@
         android:theme="@style/Theme.FlashCards"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.home.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

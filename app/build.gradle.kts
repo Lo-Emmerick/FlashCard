@@ -6,7 +6,11 @@ plugins {
 
 android {
     namespace = "com.example.flashcards"
-    compileSdk = 35
+    compileSdk = 36
+
+    buildFeatures {
+        viewBinding = true
+    }
 
     defaultConfig {
         applicationId = "com.example.flashcards"
@@ -38,6 +42,10 @@ android {
 
 dependencies {
 
+    implementation(libs.koin)
+    implementation(libs.koincompat)
+    implementation(libs.koinworkmanager)
+    implementation(libs.koinnavigation)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
