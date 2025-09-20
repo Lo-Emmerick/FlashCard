@@ -28,7 +28,7 @@ val databaseModule = module {
         Room.databaseBuilder(
             get(),
             AppDatabase::class.java,
-            "task"
+            "card"
         )
             .fallbackToDestructiveMigration()
             .build()

@@ -19,7 +19,7 @@ class HomeViewModel(
         viewModelScope.launch {
             try {
                 val response = searchCardUseCase()
-                if (response == null){
+                if (response.isEmpty()) {
                     _state.value = HomeState.Empty
                 } else {
                     _state.value = HomeState.Success(response)
