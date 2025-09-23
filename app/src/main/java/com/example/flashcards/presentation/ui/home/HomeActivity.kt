@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.flashcards.data.model.Card
 import com.example.flashcards.databinding.ActivityHomeBinding
+import com.example.flashcards.navigation.AddInformationNavigation
+import com.example.flashcards.navigation.AddInformationNavigationImpl
 import com.example.flashcards.presentation.ui.home.adapter.HomeAdapter
 import com.example.flashcards.presentation.ui.home.adapter.HomeListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -13,6 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeActivity : AppCompatActivity(), HomeListener {
     private lateinit var binding: ActivityHomeBinding
     private val viewModel: HomeViewModel by viewModel()
+    private val navigationAddInformation: AddInformationNavigation = AddInformationNavigationImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,8 +23,16 @@ class HomeActivity : AppCompatActivity(), HomeListener {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        bindListener()
         bindObserver()
         viewModel.searchCard()
+    }
+
+    private fun bindListener() {
+        binding.btnCenterImage.setOnClickListener {
+            val intent = navigationAddInformation.addInformation(this)
+            startActivity(intent)
+        }
     }
 
     private fun bindObserver() {
@@ -61,6 +72,5 @@ class HomeActivity : AppCompatActivity(), HomeListener {
     }
 
     override fun onClickItem(item: Card) {
-        TODO("Not yet implemented")
     }
 }
