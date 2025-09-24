@@ -1,4 +1,4 @@
-package com.example.flashcards.domain.useCase
+package com.example.flashcards.domain.useCase.searchCard
 
 import com.example.flashcards.data.model.Card
 

@@ -4,10 +4,10 @@ import androidx.room.Room
 import com.example.flashcards.data.local.database.AppDatabase
 import com.example.flashcards.data.repository.CardRepositoryImpl
 import com.example.flashcards.domain.repository.CardRepository
-import com.example.flashcards.domain.useCase.AddCardUseCase
-import com.example.flashcards.domain.useCase.implementation.AddCardUseCaseImpl
-import com.example.flashcards.domain.useCase.implementation.SearchCardUseCaseImpl
-import com.example.flashcards.domain.useCase.`interface`.SearchCardUseCase
+import com.example.flashcards.domain.useCase.addCard.AddCardUseCase
+import com.example.flashcards.domain.useCase.addCard.AddCardUseCaseImpl
+import com.example.flashcards.domain.useCase.searchCard.SearchCardUseCaseImpl
+import com.example.flashcards.domain.useCase.searchCard.SearchCardUseCase
 import com.example.flashcards.presentation.ui.addInformation.AddInformationViewModel
 import com.example.flashcards.presentation.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel

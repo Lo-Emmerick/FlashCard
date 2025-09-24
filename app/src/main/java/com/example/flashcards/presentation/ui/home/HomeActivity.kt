@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.flashcards.data.model.Card
 import com.example.flashcards.databinding.ActivityHomeBinding
-import com.example.flashcards.navigation.AddInformationNavigation
-import com.example.flashcards.navigation.AddInformationNavigationImpl
+import com.example.flashcards.navigation.addInformation.AddInformationNavigation
+import com.example.flashcards.navigation.addInformation.AddInformationNavigationImpl
 import com.example.flashcards.presentation.ui.home.adapter.HomeAdapter
 import com.example.flashcards.presentation.ui.home.adapter.HomeListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,6 +25,11 @@ class HomeActivity : AppCompatActivity(), HomeListener {
 
         bindListener()
         bindObserver()
+        viewModel.searchCard()
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.searchCard()
     }
 
