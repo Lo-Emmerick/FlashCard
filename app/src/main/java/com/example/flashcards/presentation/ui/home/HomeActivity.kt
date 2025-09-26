@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.flashcards.data.model.Card
 import com.example.flashcards.databinding.ActivityHomeBinding
-import com.example.flashcards.navigation.addInformation.AddInformationNavigation
-import com.example.flashcards.navigation.addInformation.AddInformationNavigationImpl
+import com.example.flashcards.navigation.addInformation.addInformation.AddInformationNavigation
+import com.example.flashcards.navigation.addInformation.addInformation.AddInformationNavigationImpl
+import com.example.flashcards.navigation.addInformation.cardsInformation.CardsInformationNavigation
+import com.example.flashcards.navigation.addInformation.cardsInformation.CardsInformationNavigationImpl
 import com.example.flashcards.presentation.ui.home.adapter.HomeAdapter
 import com.example.flashcards.presentation.ui.home.adapter.HomeListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -16,6 +18,8 @@ class HomeActivity : AppCompatActivity(), HomeListener {
     private lateinit var binding: ActivityHomeBinding
     private val viewModel: HomeViewModel by viewModel()
     private val navigationAddInformation: AddInformationNavigation = AddInformationNavigationImpl()
+    private val navigationCards: CardsInformationNavigation = CardsInformationNavigationImpl()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,5 +81,7 @@ class HomeActivity : AppCompatActivity(), HomeListener {
     }
 
     override fun onClickItem(item: Card) {
+        val intent = navigationCards.getCards(this, item.id)
+        startActivity(intent)
     }
 }

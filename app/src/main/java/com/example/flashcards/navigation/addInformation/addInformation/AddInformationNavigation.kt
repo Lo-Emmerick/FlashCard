@@ -1,4 +1,4 @@
-package com.example.flashcards.navigation.addInformation
+package com.example.flashcards.navigation.addInformation.addInformation
 
 import android.content.Context
 import android.content.Intent
