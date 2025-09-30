@@ -1,7 +1,6 @@
 package com.example.flashcards.domain.useCase.addCard
 
 import com.example.flashcards.data.local.model.CardEntity
-import com.example.flashcards.data.model.Card
 import com.example.flashcards.domain.data.CardEdit
 import com.example.flashcards.domain.repository.CardRepository
 

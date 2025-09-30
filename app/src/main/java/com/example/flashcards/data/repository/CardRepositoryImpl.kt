@@ -19,4 +19,8 @@ class CardRepositoryImpl(
             false
         }
     }
+
+    override suspend fun showCard(cardId: Int): List<Card> {
+        return dao.getCardsAfterId(cardId)
+    }
 }

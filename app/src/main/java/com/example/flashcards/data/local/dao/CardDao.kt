@@ -14,4 +14,7 @@ interface CardDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCard(card: CardEntity)
+
+    @Query("SELECT * FROM card WHERE id > :cardId ORDER BY id ASC")
+    suspend fun getCardsAfterId(cardId: Int): List<Card>
 }

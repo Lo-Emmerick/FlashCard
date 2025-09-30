@@ -46,18 +46,6 @@
         app:layout_constraintTop_toBottomOf="@+id/trash" />
 
     <include
-        android:id="@+id/state_empty"
-        layout="@layout/empty"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="90dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trash" />
-
-    <include
         android:id="@+id/state_loading"
         layout="@layout/loading_cards"
         android:layout_width="0dp"

@@ -6,4 +6,5 @@ import com.example.flashcards.data.model.Card
 interface CardRepository {
     suspend fun searchCard(): List<Card>
     suspend fun addCard(card: CardEntity): Boolean
+    suspend fun showCard(cardId: Int): List<Card>
 }

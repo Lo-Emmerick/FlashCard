@@ -20,7 +20,6 @@ class HomeActivity : AppCompatActivity(), HomeListener {
     private val navigationAddInformation: AddInformationNavigation = AddInformationNavigationImpl()
     private val navigationCards: CardsInformationNavigation = CardsInformationNavigationImpl()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
