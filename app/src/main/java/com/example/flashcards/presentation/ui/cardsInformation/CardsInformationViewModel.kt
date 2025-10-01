@@ -10,20 +10,41 @@ import kotlinx.coroutines.launch
 class CardsInformationViewModel(
     private val showCardUseCase: ShowCardUseCase
 ) : ViewModel() {
-    private val _state = MutableLiveData<CardsInformationState>()
-    val state: LiveData<CardsInformationState> = _state
 
-    fun showCard(cardId: Int) {
+    private val _state = MutableLiveData<CardsInformationState>()
+    val state: LiveData<CardsInformationState> get() = _state
+
+    fun loadDeck(cardId: Int) {
         _state.value = CardsInformationState.Loading
         viewModelScope.launch {
             try {
-                val response = showCardUseCase(cardId)
-
-                _state.value = CardsInformationState.Success(response)
-
+                val firstCard = showCardUseCase.loadDeck(cardId)
+                if (firstCard != null) {
+                    _state.value = CardsInformationState.Success(firstCard)
+                } else {
+                    _state.value = CardsInformationState.Error
+                }
             } catch (e: Exception) {
                 _state.value = CardsInformationState.Error
             }
+        }
+    }
+
+    fun showNextCard() {
+        val nextCard = showCardUseCase.getNextCard()
+        if (nextCard != null) {
+            _state.value = CardsInformationState.Success(nextCard)
+        } else {
+            _state.value = CardsInformationState.Error
+        }
+    }
+
+    fun resetDeck() {
+        val card = showCardUseCase.resetDeck()
+        if (card != null) {
+            _state.value = CardsInformationState.Success(card)
+        } else {
+            _state.value = CardsInformationState.Error
         }
     }
 }
