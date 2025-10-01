@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.flashcards.domain.useCase.deleteCard.DeleteCardUseCase
 import com.example.flashcards.domain.useCase.searchCard.SearchCardUseCase
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val searchCardUseCase: SearchCardUseCase
+
 ) : ViewModel() {
 
     private val _state = MutableLiveData<HomeState>()

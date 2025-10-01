@@ -15,12 +15,17 @@ class CardRepositoryImpl(
         return try {
             dao.insertCard(card)
             true
-        } catch (e: Exception){
+        } catch (e: Exception) {
             false
         }
     }
 
     override suspend fun showCard(cardId: Int): List<Card> {
         return dao.getCardsAfterId(cardId)
+    }
+
+    override suspend fun deleteCard(cardId: Int): List<Card> {
+        dao.deleteCardId(cardId)
+        return searchCard()
     }
 }

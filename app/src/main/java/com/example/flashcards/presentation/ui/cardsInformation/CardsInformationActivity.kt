@@ -1,11 +1,15 @@
 package com.example.flashcards.presentation.ui.cardsInformation
+
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.example.flashcards.R
 import com.example.flashcards.data.model.Card
 import com.example.flashcards.databinding.CardsInformationBinding
 import com.example.flashcards.navigation.addInformation.cardsInformation.CardsInformationNavigation.Companion.CARD_ID
@@ -32,7 +36,7 @@ class CardsInformationActivity : AppCompatActivity() {
     private fun bindListener() {
         binding.cardFront.setOnClickListener {
             val currentCard = (viewModel.state.value as? CardsInformationState.Success)?.result
-            currentCard?.let { flipFrontToBack(it.second_text) }
+            currentCard?.let { flipFrontToBack(it.second_text, it.first_text) }
         }
 
         binding.cardBack.setOnClickListener {
@@ -43,6 +47,10 @@ class CardsInformationActivity : AppCompatActivity() {
 
         binding.comeBack.setOnClickListener {
             finish()
+        }
+
+        binding.trash.setOnClickListener {
+            viewModel.deletCard(cardId)
         }
     }
 
@@ -75,19 +83,30 @@ class CardsInformationActivity : AppCompatActivity() {
 
     private fun showCardFront(card: Card) {
         isAnimating = false
+
         binding.cardFront.apply {
+            translationX = binding.root.width.toFloat()
             isVisible = true
             text = card.first_text
             rotationY = 0f
         }
+
         binding.cardBack.apply {
             isVisible = false
-            text = ""
+            findViewById<TextView>(R.id.card_back_top_text).text = ""
+            findViewById<TextView>(R.id.card_back_bottom_text).text = ""
             rotationY = 0f
         }
+
+        binding.cardFront.animate()
+            .translationX(0f)
+            .setDuration(300)
+            .setInterpolator(AccelerateDecelerateInterpolator())
+            .setListener(null)
+            .start()
     }
 
-    private fun flipFrontToBack(cardBackText: String) {
+    private fun flipFrontToBack(cardBackText: String, cardFrontText: String) {
         if (isAnimating) return
 
         isAnimating = true
@@ -105,7 +124,8 @@ class CardsInformationActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 binding.cardFront.isVisible = false
                 binding.cardBack.isVisible = true
-                binding.cardBack.text = cardBackText
+                findViewById<TextView>(R.id.card_back_top_text).text = cardBackText
+                findViewById<TextView>(R.id.card_back_bottom_text).text = cardFrontText
                 flipIn.start()
             }
         })

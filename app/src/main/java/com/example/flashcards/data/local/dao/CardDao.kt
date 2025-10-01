@@ -17,4 +17,7 @@ interface CardDao {
 
     @Query("SELECT * FROM card WHERE id >= :cardId ORDER BY id ASC")
     suspend fun getCardsAfterId(cardId: Int): List<Card>
+
+    @Query("DELETE FROM card WHERE id = :cardId")
+    suspend fun deleteCardId(cardId: Int)
 }

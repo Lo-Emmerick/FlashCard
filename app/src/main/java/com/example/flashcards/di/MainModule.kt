@@ -6,6 +6,8 @@ import com.example.flashcards.data.repository.CardRepositoryImpl
 import com.example.flashcards.domain.repository.CardRepository
 import com.example.flashcards.domain.useCase.addCard.AddCardUseCase
 import com.example.flashcards.domain.useCase.addCard.AddCardUseCaseImpl
+import com.example.flashcards.domain.useCase.deleteCard.DeleteCardUseCase
+import com.example.flashcards.domain.useCase.deleteCard.DeleteCardUseCaseImpl
 import com.example.flashcards.domain.useCase.searchCard.SearchCardUseCase
 import com.example.flashcards.domain.useCase.searchCard.SearchCardUseCaseImpl
 import com.example.flashcards.domain.useCase.showCard.ShowCardUseCase
@@ -23,6 +25,7 @@ val loadUseCase = module {
     single { SearchCardUseCaseImpl(repository = get()) as SearchCardUseCase }
     single { AddCardUseCaseImpl(repository = get()) as AddCardUseCase }
     single { ShowCardUseCaseImpl(repository = get()) as ShowCardUseCase }
+    single { DeleteCardUseCaseImpl(repository = get()) as DeleteCardUseCase }
 }
 val loadViewModel = module {
     viewModel {
@@ -32,7 +35,10 @@ val loadViewModel = module {
         AddInformationViewModel(addCardUseCase = get())
     }
     viewModel {
-        CardsInformationViewModel(showCardUseCase = get())
+        CardsInformationViewModel(
+            showCardUseCase = get(),
+            deleteCardUseCase = get()
+        )
     }
 }
 
