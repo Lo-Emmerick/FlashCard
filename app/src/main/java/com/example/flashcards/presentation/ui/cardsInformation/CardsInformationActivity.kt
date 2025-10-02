@@ -13,6 +13,8 @@ import com.example.flashcards.R
 import com.example.flashcards.data.model.Card
 import com.example.flashcards.databinding.CardsInformationBinding
 import com.example.flashcards.navigation.addInformation.cardsInformation.CardsInformationNavigation.Companion.CARD_ID
+import com.example.flashcards.presentation.ui.cardsInformation.state.CardsInformationDeleteState
+import com.example.flashcards.presentation.ui.cardsInformation.state.CardsInformationState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CardsInformationActivity : AppCompatActivity() {
@@ -50,7 +52,7 @@ class CardsInformationActivity : AppCompatActivity() {
         }
 
         binding.trash.setOnClickListener {
-            viewModel.deletCard(cardId)
+            viewModel.deleteCard(cardId)
         }
     }
 
@@ -63,6 +65,19 @@ class CardsInformationActivity : AppCompatActivity() {
                 is CardsInformationState.Success -> showCardFront(state.result)
             }
         }
+
+        viewModel.deleteState.observe(this) { deleteState ->
+            setDefaultState()
+            when (deleteState) {
+                CardsInformationDeleteState.Loading -> showLoadingScreen()
+                CardsInformationDeleteState.Error -> showErrorScreen()
+                is CardsInformationDeleteState.Success -> successCarddelete()
+            }
+        }
+    }
+
+    private fun successCarddelete() {
+        viewModel.showNextCard()
     }
 
     private fun setDefaultState() {

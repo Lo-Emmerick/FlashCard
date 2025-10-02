@@ -24,8 +24,12 @@ class CardRepositoryImpl(
         return dao.getCardsAfterId(cardId)
     }
 
-    override suspend fun deleteCard(cardId: Int): List<Card> {
-        dao.deleteCardId(cardId)
-        return searchCard()
+    override suspend fun deleteCard(cardId: Int): Boolean {
+        return try {
+            dao.deleteCardId(cardId)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.flashcards.presentation.ui.cardsInformation
+package com.example.flashcards.presentation.ui.cardsInformation.state
 
 import com.example.flashcards.data.model.Card
 

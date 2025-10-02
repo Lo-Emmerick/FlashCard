@@ -4,12 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.flashcards.domain.useCase.deleteCard.DeleteCardUseCase
 import com.example.flashcards.domain.useCase.showCard.ShowCardUseCase
+import com.example.flashcards.presentation.ui.cardsInformation.state.CardsInformationDeleteState
+import com.example.flashcards.presentation.ui.cardsInformation.state.CardsInformationState
 import kotlinx.coroutines.launch
 
 class CardsInformationViewModel(
-    private val showCardUseCase: ShowCardUseCase
+    private val showCardUseCase: ShowCardUseCase,
+    private val deleteCardUseCase: DeleteCardUseCase
 ) : ViewModel() {
+
+    private val _deteleState = MutableLiveData<CardsInformationDeleteState>()
+    val deleteState: LiveData<CardsInformationDeleteState> get() = _deteleState
 
     private val _state = MutableLiveData<CardsInformationState>()
     val state: LiveData<CardsInformationState> get() = _state
@@ -39,12 +46,18 @@ class CardsInformationViewModel(
         }
     }
 
-    fun resetDeck() {
-        val card = showCardUseCase.resetDeck()
-        if (card != null) {
-            _state.value = CardsInformationState.Success(card)
-        } else {
-            _state.value = CardsInformationState.Error
+    fun deleteCard(cardId: Int) {
+        viewModelScope.launch {
+            try {
+                val card = deleteCardUseCase(cardId)
+                if (card == true) {
+                    _deteleState.value = CardsInformationDeleteState.Success
+                } else {
+                    _deteleState.value = CardsInformationDeleteState.Error
+                }
+            } catch (e: Exception) {
+                _deteleState.value = CardsInformationDeleteState.Error
+            }
         }
     }
 }
