@@ -1,6 +1,5 @@
 package com.example.flashcards.presentation.ui.cardsInformation
 
-import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.os.Bundle
@@ -52,7 +51,10 @@ class CardsInformationActivity : AppCompatActivity() {
         }
 
         binding.trash.setOnClickListener {
-            viewModel.deleteCard(cardId)
+            val currentCard = (viewModel.state.value as? CardsInformationState.Success)?.result
+            currentCard?.let {
+                viewModel.deleteCard(it.id)
+            }
         }
     }
 
@@ -62,6 +64,7 @@ class CardsInformationActivity : AppCompatActivity() {
             when (state) {
                 CardsInformationState.Loading -> showLoadingScreen()
                 CardsInformationState.Error -> showErrorScreen()
+                CardsInformationState.Empty -> showEmptyScreen()
                 is CardsInformationState.Success -> showCardFront(state.result)
             }
         }
@@ -71,13 +74,21 @@ class CardsInformationActivity : AppCompatActivity() {
             when (deleteState) {
                 CardsInformationDeleteState.Loading -> showLoadingScreen()
                 CardsInformationDeleteState.Error -> showErrorScreen()
-                is CardsInformationDeleteState.Success -> successCarddelete()
+                CardsInformationDeleteState.Empty -> showEmptyScreen()
+                is CardsInformationDeleteState.Success -> successCardelete()
             }
         }
     }
 
-    private fun successCarddelete() {
-        viewModel.showNextCard()
+    private fun successCardelete() {
+        val nextCard = (viewModel.state.value as? CardsInformationState.Success)?.result
+        if (nextCard != null) {
+            showCardFront(nextCard)
+        }
+    }
+
+    private fun showEmptyScreen() {
+        finish()
     }
 
     private fun setDefaultState() {
@@ -136,17 +147,18 @@ class CardsInformationActivity : AppCompatActivity() {
         flipIn.duration = 200
 
         flipOut.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
+            override fun onAnimationEnd(animation: android.animation.Animator) {
                 binding.cardFront.isVisible = false
                 binding.cardBack.isVisible = true
-                findViewById<TextView>(R.id.card_back_top_text).text = cardBackText
-                findViewById<TextView>(R.id.card_back_bottom_text).text = cardFrontText
+                binding.cardBack.findViewById<TextView>(R.id.card_back_top_text).text = cardBackText
+                binding.cardBack.findViewById<TextView>(R.id.card_back_bottom_text).text =
+                    cardFrontText
                 flipIn.start()
             }
         })
 
         flipIn.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
+            override fun onAnimationEnd(animation: android.animation.Animator) {
                 isAnimating = false
             }
         })

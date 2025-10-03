@@ -19,5 +19,5 @@ interface CardDao {
     suspend fun getCardsAfterId(cardId: Int): List<Card>
 
     @Query("DELETE FROM card WHERE id = :cardId")
-    suspend fun deleteCardId(cardId: Int)
+    suspend fun deleteCardId(cardId: Int): Int
 }

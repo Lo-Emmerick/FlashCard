@@ -29,7 +29,7 @@ class CardsInformationViewModel(
                 if (firstCard != null) {
                     _state.value = CardsInformationState.Success(firstCard)
                 } else {
-                    _state.value = CardsInformationState.Error
+                    _state.value = CardsInformationState.Empty
                 }
             } catch (e: Exception) {
                 _state.value = CardsInformationState.Error
@@ -38,24 +38,35 @@ class CardsInformationViewModel(
     }
 
     fun showNextCard() {
-        val nextCard = showCardUseCase.getNextCard()
-        if (nextCard != null) {
-            _state.value = CardsInformationState.Success(nextCard)
-        } else {
-            _state.value = CardsInformationState.Error
+        viewModelScope.launch {
+            try {
+                val nextCard = showCardUseCase.advanceIndex()
+                if (nextCard != null) {
+                    _state.value = CardsInformationState.Success(nextCard)
+                } else {
+                    _state.value = CardsInformationState.Empty
+                }
+            } catch (e: Exception) {
+                _state.value = CardsInformationState.Error
+            }
         }
     }
 
+
     fun deleteCard(cardId: Int) {
+        _deteleState.value = CardsInformationDeleteState.Loading
         viewModelScope.launch {
-            try {
-                val card = deleteCardUseCase(cardId)
-                if (card == true) {
+            val deleted = deleteCardUseCase(cardId)
+            if (deleted) {
+                showCardUseCase.removeCardFromList(cardId)
+                val nextCard = showCardUseCase.getNextCard()
+                if (nextCard != null) {
+                    _state.value = CardsInformationState.Success(nextCard)
                     _deteleState.value = CardsInformationDeleteState.Success
                 } else {
-                    _deteleState.value = CardsInformationDeleteState.Error
+                    _deteleState.value = CardsInformationDeleteState.Empty
                 }
-            } catch (e: Exception) {
+            } else {
                 _deteleState.value = CardsInformationDeleteState.Error
             }
         }

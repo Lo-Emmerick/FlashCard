@@ -26,8 +26,8 @@ class CardRepositoryImpl(
 
     override suspend fun deleteCard(cardId: Int): Boolean {
         return try {
-            dao.deleteCardId(cardId)
-            true
+            val rowsDeleted = dao.deleteCardId(cardId)
+            rowsDeleted > 0
         } catch (e: Exception) {
             false
         }

@@ -1,6 +1,5 @@
 package com.example.flashcards.domain.useCase.showCard
 
-import android.util.Log
 import com.example.flashcards.data.model.Card
 import com.example.flashcards.domain.repository.CardRepository
 
@@ -8,23 +7,34 @@ class ShowCardUseCaseImpl(
     private val repository: CardRepository
 ) : ShowCardUseCase {
 
-    private var cards: List<Card> = emptyList()
+    private var cards: MutableList<Card> = mutableListOf()
     private var currentIndex: Int = 0
 
     override suspend fun loadDeck(cardId: Int): Card? {
-        cards = repository.showCard(cardId)
+        cards = repository.showCard(cardId).toMutableList()
         currentIndex = 0
         return cards.getOrNull(currentIndex)
     }
 
     override fun getNextCard(): Card? {
-        if (cards.isEmpty()) return null
-        currentIndex = (currentIndex + 1) % cards.size
-        return cards[currentIndex]
+        return cards.getOrNull(currentIndex)
     }
 
-    override fun resetDeck(): Card? {
-        currentIndex = 0
-        return cards.getOrNull(currentIndex)
+    override fun advanceIndex(): Card? {
+        return if (currentIndex < cards.size - 1) {
+            currentIndex++
+            cards[currentIndex]
+        } else {
+            null
+        }
+    }
+
+
+    override fun removeCardFromList(cardId: Int) {
+        val indexToRemove = cards.indexOfFirst { it.id == cardId }
+        if (indexToRemove >= 0) {
+            cards.removeAt(indexToRemove)
+            if (currentIndex > indexToRemove) currentIndex--
+        }
     }
 }
