@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.glide)
     implementation(libs.koin)
     implementation(libs.koincompat)
     implementation(libs.koinworkmanager)

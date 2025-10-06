@@ -12,6 +12,7 @@ constraintlayout = "2.2.1"
 room = "2.6.1"
 ksp = "2.0.21-1.0.25"
 koin = "3.2.0"
+glide = "4.16.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,6 +30,7 @@ koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koincompat = { group = "io.insert-koin", name = "koin-android-compat", version.ref = "koin" }
 koinworkmanager = { group = "io.insert-koin", name = "koin-androidx-workmanager", version.ref = "koin" }
 koinnavigation = { group = "io.insert-koin", name = "koin-androidx-navigation", version.ref = "koin" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

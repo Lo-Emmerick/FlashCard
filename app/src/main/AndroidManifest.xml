@@ -14,13 +14,7 @@
         android:theme="@style/Theme.FlashCards"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.ui.cardsInformation.CardsInformationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.ui.addInformation.AddInformationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.ui.home.HomeActivity"
+            android:name=".presentation.ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".presentation.ui.cardsInformation.CardsInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.addInformation.AddInformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.home.HomeActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>
