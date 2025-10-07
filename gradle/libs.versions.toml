@@ -13,6 +13,9 @@ room = "2.6.1"
 ksp = "2.0.21-1.0.25"
 koin = "3.2.0"
 glide = "4.16.0"
+mockk = "1.13.10"
+coretesting = "2.2.0"
+coroutines = "1.7.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +34,9 @@ koincompat = { group = "io.insert-koin", name = "koin-android-compat", version.r
 koinworkmanager = { group = "io.insert-koin", name = "koin-androidx-workmanager", version.ref = "koin" }
 koinnavigation = { group = "io.insert-koin", name = "koin-androidx-navigation", version.ref = "koin" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+mockk = {group = "io.mockk", name = "mockk", version.ref = "mockk"}
+coretesting = { group = "androidx.arch.core", name = "core-testing", version.ref = "coretesting" }
+coroutines = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

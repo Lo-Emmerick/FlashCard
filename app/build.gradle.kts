@@ -41,6 +41,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.coroutines)
+    implementation(libs.coretesting)
+    implementation(libs.mockk)
     implementation(libs.glide)
     implementation(libs.koin)
     implementation(libs.koincompat)

@@ -52,7 +52,6 @@ class CardsInformationViewModel(
         }
     }
 
-
     fun deleteCard(cardId: Int) {
         _deteleState.value = CardsInformationDeleteState.Loading
         viewModelScope.launch {
