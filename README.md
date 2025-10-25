@@ -1,4 +1,4 @@
-# LaeCard
+# FlashCards
 App Android de flash card" (ou cartão de memória flash) com persistência local via Room e arquitetura MVVM
 
 ## Funcionalidades
