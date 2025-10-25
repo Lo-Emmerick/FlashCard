@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".app.MyApp"
+        android:name="com.example.laecards.app.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +14,7 @@
         android:theme="@style/Theme.FlashCards"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.ui.splash.SplashActivity"
+            android:name="com.example.laecards.presentation.ui.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +24,13 @@
         </activity>
 
         <activity
-            android:name=".presentation.ui.cardsInformation.CardsInformationActivity"
+            android:name="com.example.laecards.presentation.ui.cardsInformation.CardsInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ui.addInformation.AddInformationActivity"
+            android:name="com.example.laecards.presentation.ui.addInformation.AddInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.ui.home.HomeActivity"
+            android:name="com.example.laecards.presentation.ui.home.HomeActivity"
             android:exported="true" />
 
     </application>
