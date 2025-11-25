@@ -1,86 +1,44 @@
 package com.example.laecards.presentation.ui.home
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import com.example.laecards.data.model.Card
-import com.example.laecards.navigation.addInformation.addInformation.AddInformationNavigation
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import com.example.laecards.navigation.addInformation.addInformation.AddInformationNavigationImpl
-import com.example.laecards.navigation.addInformation.cardsInformation.CardsInformationNavigation
 import com.example.laecards.navigation.addInformation.cardsInformation.CardsInformationNavigationImpl
-import com.example.laecards.presentation.ui.home.adapter.HomeAdapter
-import com.example.laecards.presentation.ui.home.adapter.HomeListener
-import com.laecards.app.databinding.ActivityHomeBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeActivity : AppCompatActivity(), HomeListener {
-    private lateinit var binding: ActivityHomeBinding
+class HomeActivity : ComponentActivity() {
+
     private val viewModel: HomeViewModel by viewModel()
-    private val navigationAddInformation: AddInformationNavigation = AddInformationNavigationImpl()
-    private val navigationCards: CardsInformationNavigation = CardsInformationNavigationImpl()
+    private val navigationAdd = AddInformationNavigationImpl()
+    private val navigationCards = CardsInformationNavigationImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        bindListener()
-        bindObserver()
+        setContent {
+
+            val state by viewModel.state.observeAsState(HomeState.Loading)
+
+            HomeScreen(
+                state = state,
+                onAddClick = {
+                    startActivity(navigationAdd.addInformation(this))
+                },
+                onCardClick = { card ->
+                    startActivity(navigationCards.getCards(this, card.id))
+                },
+                onRetry = { viewModel.searchCard() }
+            )
+        }
+
         viewModel.searchCard()
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.searchCard()
-    }
-
-    private fun bindListener() {
-        binding.btnCenterImage.setOnClickListener {
-            val intent = navigationAddInformation.addInformation(this)
-            startActivity(intent)
-        }
-    }
-
-    private fun bindObserver() {
-        viewModel.state.observe(this) {
-            setDefaultState()
-            when (it) {
-                HomeState.Error -> showErrorScreen()
-                HomeState.Loading -> showLoadingScreen()
-                HomeState.Empty -> showEmptyState()
-                is HomeState.Success -> showSuccessScreen(it.result)
-            }
-        }
-    }
-
-    private fun setDefaultState() {
-        binding.recyclerView.isVisible = false
-        binding.stateError.root.isVisible = false
-        binding.stateLoading.root.isVisible = false
-        binding.stateEmpty.root.isVisible = false
-    }
-
-    private fun showErrorScreen() {
-        binding.stateError.root.isVisible = true
-    }
-
-    private fun showLoadingScreen() {
-        binding.stateLoading.root.isVisible = true
-    }
-
-    private fun showEmptyState() {
-        binding.stateEmpty.root.isVisible = true
-    }
-
-    private fun showSuccessScreen(movieRoomList: List<Card>) {
-        binding.recyclerView.isVisible = true
-        binding.recyclerView.adapter = HomeAdapter(movieRoomList, this)
-    }
-
-    override fun onClickItem(item: Card) {
-        val intent = navigationCards.getCards(this, item.id)
-        startActivity(intent)
     }
 }
